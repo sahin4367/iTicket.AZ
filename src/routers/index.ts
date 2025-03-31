@@ -10,6 +10,6 @@ export const v1Router = Router();
 
 v1Router.use('/users' , UserRouter)
 v1Router.use('/admin' , AdminRouter)
-v1Router.use('/events' , EventRouter)
+v1Router.use('/events' , EventRouter , useAuth , adminAuth )
 v1Router.use('/tickets' , TicketRouter , useAuth , adminAuth )
 

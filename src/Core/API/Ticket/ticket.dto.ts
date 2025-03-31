@@ -1,8 +1,7 @@
-import { IsEnum, IsNumber, IsString, Max, MaxLength, Min, MinLength } from "class-validator";
+import { IsEnum, IsNotEmpty, IsNumber, IsString, IsUUID, Max, MaxLength, Min, MinLength } from "class-validator";
 import { ETicketStatus, ETicketType } from "../../app/enums";
 
-
-export class CreateTicketDTO {
+export class TicketDTO {
     @IsString()
     @MinLength(3)
     @MaxLength(15)
@@ -18,4 +17,10 @@ export class CreateTicketDTO {
 
     @IsEnum(ETicketStatus)
     status : ETicketStatus;
+
+    @IsNumber()
+    user_id: number;
+
+    @IsNumber()
+    event_id: number;
 }

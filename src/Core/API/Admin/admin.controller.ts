@@ -84,7 +84,19 @@ const userCreateAdmin = async (req: CustomRequest, res: Response, next: NextFunc
 
 const UserList = async (req: CustomRequest, res: Response, next: NextFunction): Promise<void> => {
     try {
-        const users = await User.find();
+        const users = await User.find({
+            select : {
+                id : true,
+                name : true,
+                surname : true,
+                role : true,
+                email : true,
+                phone : true,
+                createdAt : true,
+                updatedAt : true,
+                deletedAt : true,
+            }
+        });
         res.status(200).json({
             message: "Users list~!",
             users
@@ -156,7 +168,7 @@ const userDelete = async (req: CustomRequest, res: Response, next: NextFunction)
             deletedAt : new Date()
         });
         res.json({
-            message : `User deleted successfully~!`,
+            message : `User id:${userID} deleted successfully~!`,
         });
         return;
     } catch (error) {
