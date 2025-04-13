@@ -44,9 +44,15 @@ console.log(decoded);
 İndi başa düşdün? 😎
 
 
+//// SEN DEMELI CART LOGICINDE DEMELI RESERVATIONS - QAYTARILAN RESPONSELERI DUZELT CUNKI , frontend basa dusmur~!
 
 
-
-
+Upload etmelisen unutma ,
+CRonjob etmeyi unutma
+ve diger isler 
+Socket 
+Promocode logic 
+daha sonra dostuna bilet gondermek qalib 
+ve s.... diger melumatlar ~!~ 
 
 

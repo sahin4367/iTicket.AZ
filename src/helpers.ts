@@ -1,4 +1,3 @@
-//this  transporitinwe few rewfef wfsefd added~!
 import nodemailer from "nodemailer";
 import { appConfig } from "./consts";
 

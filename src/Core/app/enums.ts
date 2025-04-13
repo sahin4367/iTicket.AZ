@@ -23,6 +23,12 @@ export enum ETicketType {
     ECONOMY = "ECONOMY"
 }
 
+export enum EOrderStatus {
+    PENDING = "PENDING",
+    COMPLETED = "COMPLETED",
+    CANCLELED = "CANCLELED"
+}
+
 export interface UpdateUserDTO {
     name  : string;
     surname : string;
@@ -30,4 +36,11 @@ export interface UpdateUserDTO {
     password : string;
     phone : string;
     role : EUsesrRole;
+}
+
+export interface CreatePromoCodeDTO {
+    code: string;
+    discountPercentage: number;
+    expiresAt: string;
+    userLimit?: number;
 }

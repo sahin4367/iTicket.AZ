@@ -88,7 +88,7 @@ const createTicket = async (req: Request, res: Response, next: NextFunction): Pr
 const getListTicket = async(req:Request,res:Response,next:NextFunction):Promise<void> => {
     try {
         const tickets = await Ticket.find({
-            relations : ["user","event"],
+            relations : ["user","event","order"],
             select : {
                 user : {
                     id:true,
@@ -132,7 +132,7 @@ const getTicketByID = async(req:Request,res:Response,next:NextFunction):Promise<
         const ticketID = Number(req.params.id);
         const ticket = await Ticket.findOne({
             where : {id : ticketID},
-            relations : ["user","event"],
+            relations : ["user","event","order"],
             select : {
                 user : {
                     id : true,

@@ -1,7 +1,9 @@
-import { BaseEntity, Column, CreateDateColumn, DeleteDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { BaseEntity, Column, CreateDateColumn, DeleteDateColumn, Entity, OneToMany, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { EUsesrRole } from "../../Core/app/enums";
 import { Model, DataTypes } from "sequelize";
 import { Ticket } from "./ticket.model";
+import { Order } from "./order.model";
+import { Cart } from "./cart.model";
 
 @Entity({name : "users"})
 export class User extends BaseEntity {
@@ -50,4 +52,9 @@ export class User extends BaseEntity {
     @OneToMany(() => Ticket, (ticket) => ticket.user)
     tickets : Ticket[];
 
+    @OneToMany(() => Order , order => order.user)
+    order : Order[];
+
+    @OneToOne(() => Cart , cart => cart.user , {onDelete : "CASCADE"})
+    cart : Cart;
 }
