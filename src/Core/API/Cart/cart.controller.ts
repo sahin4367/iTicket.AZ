@@ -5,24 +5,26 @@ import { CartTicket } from "../../../DAL/models/Cart-Ticket.model";
 import { User } from "../../../DAL/models/user.model";
 
 
-const addToCart = async(req: Request, res: Response, next: NextFunction): Promise<void> => {
+const addToCart = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
         const { userId, ticketId, quantity } = req.body;
+
         let cart = await Cart.findOne({
             where: { user: { id: userId } },
             relations: ["user", "cartTickets"],
-            select : {
-                user : {
-                    id : true,
-                    name : true,
-                    email : true,
-                    phone : true,
-                    createdAt : true,
-                    updatedAt : true,
-                    deletedAt : true,
+            select: {
+                user: {
+                    id: true,
+                    name: true,
+                    email: true,
+                    phone: true,
+                    createdAt: true,
+                    updatedAt: true,
+                    deletedAt: true,
                 }
             }
         });
+
         if (!cart) {
             cart = Cart.create({
                 user: { id: userId },
@@ -37,8 +39,7 @@ const addToCart = async(req: Request, res: Response, next: NextFunction): Promis
             return;
         }
 
-        const reservationExpiresAt = new Date();
-        reservationExpiresAt.setMinutes(reservationExpiresAt.getMinutes() + 15);
+        const reservationExpiresAt = new Date(Date.now() + 15 * 60 * 1000); 
 
         const cartTicket = CartTicket.create({
             cart,
@@ -61,7 +62,6 @@ const addToCart = async(req: Request, res: Response, next: NextFunction): Promis
         next(error);
     }
 };
-
 
 const getCart = async(req:Request,res:Response,next:NextFunction):Promise<void> => {
     try {

@@ -4,6 +4,7 @@ import { Model, DataTypes } from "sequelize";
 import { Ticket } from "./ticket.model";
 import { Order } from "./order.model";
 import { Cart } from "./cart.model";
+import { Message } from "./chat-IO.model";
 
 @Entity({name : "users"})
 export class User extends BaseEntity {
@@ -35,10 +36,10 @@ export class User extends BaseEntity {
     isVerifiedEmail : boolean;
 
     @Column({type : "datetime" , nullable : true})
-    codeExpireAt : Date;
+    codeExpireAt : Date | null;
 
-    @Column({type : "varchar" , nullable: true})
-    verifyCode : string | null;
+    @Column({type : "int" , nullable: true})
+    verifyCode : number | null;
 
     @UpdateDateColumn({type : "datetime" , nullable : true})
     updatedAt: Date;
@@ -57,4 +58,10 @@ export class User extends BaseEntity {
 
     @OneToOne(() => Cart , cart => cart.user , {onDelete : "CASCADE"})
     cart : Cart;
+
+    @OneToMany(() => Message , message => message.sender)
+    messageSend : Message[];
+
+    @OneToMany(() => Message , message => message.receiver)
+    messageReceiver : Message[];
 }

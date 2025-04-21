@@ -1,7 +1,9 @@
 import { Router } from "express";
-import { PromoCodeController } from "./PrCode.controller";
+import { PromocodeController } from "./PrCode.controller";
+
 
 export const PromoCodeRouter = Router();
-const controller = PromoCodeController;
+const controller = PromocodeController;
 
 PromoCodeRouter.post("/create-Code" , controller.createPromoCode)
+PromoCodeRouter.post("/apply-Code" , controller.applyPromoCode)

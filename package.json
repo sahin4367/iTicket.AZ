@@ -13,10 +13,14 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@paypal/paypal-js": "^8.2.0",
+    "@paypal/paypal-server-sdk": "^1.0.0",
+    "@paypal/sdk-client": "^4.0.197",
     "class-validator": "^0.14.1",
     "mysql": "^2.18.1",
     "reflect-metadata": "^0.2.2",
     "sequelize": "^6.37.6",
+    "socket.io": "^4.8.1",
     "typeorm": "^0.3.21"
   },
   "devDependencies": {

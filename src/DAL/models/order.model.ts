@@ -3,6 +3,7 @@ import { EOrderStatus } from "../../Core/app/enums";
 import { User } from "./user.model";
 import { Ticket } from "./ticket.model";
 import { Cart } from "./cart.model";
+import { PromoCode } from "./promocode.model";
 @Entity({  name : "orders" })
 export class Order extends BaseEntity {
     @PrimaryGeneratedColumn()
@@ -39,4 +40,8 @@ export class Order extends BaseEntity {
     @OneToOne(() => Cart, cart => cart.order)
     @JoinColumn({ name: "cart_id" })
     cart: Cart;
+
+    @ManyToOne(() => PromoCode, { nullable: true })
+    @JoinColumn({ name: "promocode_id" })
+    promoCode?: PromoCode | null;
 }

@@ -1,35 +1,54 @@
-import express, { Request, Response, NextFunction } from "express";
-import "reflect-metadata"
-import cors from 'cors';
-import * as dotenv from 'dotenv';
-import { AppDataSource } from "./DAL/config/data-source";
+import express from "express";
+import http from "http";
+import { Server } from "socket.io";
 import { v1Router } from "./routers";
+import { AppDataSource } from "./DAL/config/data-source";
 import { appConfig } from "./consts";
-
+import * as dotenv from 'dotenv';
+import cors from "cors";
 
 dotenv.config();
 AppDataSource.initialize()
-    .then((): void => {
-        console.log("Database connected successfully~!");        
+    .then(() => {
+        console.log("Database connected successfully!");
     })
-    .catch((error: Error): void => {
-        console.error("Not connected to database~!", error);
-    })
+    .catch((error) => {
+        console.error("Failed to connect to the database:", error);
+});
 
 const app = express();
-app.use(cors())
+app.use(cors());
 app.use(express.json());
+const server = http.createServer(app);
 
+const socketIO = new Server(server, {
+    cors: {
+    origin: "*",
+    },
+});
 
-app.use((error: Error, req: Request, res: Response, next: NextFunction) => {
-    console.error(error);
-    res.status(500).json({ error });
+socketIO.on("connection", (socket) => {
+    console.log("A user connected", socket.id);
+
+    socket.on("type", (username) => {
+    socket.broadcast.emit("typing-user", username);
+
+    console.log(`${username} is typing...`);
+    });
+    
+    socket.on("chat", ({ username, message }) => {
+    console.log(`[${username}]: ${message}`);
+
+    socketIO.emit("receive-message", { username, message });
     });
 
-app.use('/api/v1' , v1Router)
+    socket.on("disconnect", () => {
+    console.log("A user disconnected", socket.id);
+    });
+});
 
+app.use('/api/v1' ,v1Router);
 
-const Port = appConfig.PORT;
-app.listen(Port , () => {
-    console.log(`Server is running on port - ${Port}.`);
-    })
+server.listen(appConfig.PORT ,() => {
+    console.log(`Server is running on port - ${appConfig.PORT}`);
+});

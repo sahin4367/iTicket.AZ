@@ -82,29 +82,28 @@ const getListEvents = async(req:Request,res:Response,next:NextFunction):Promise<
     }
 }
 
-const getEventById = async(req:Request,res:Response,next:NextFunction):Promise<void> => {
+const getEventById = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
         const EventID = Number(req.params.id);
         const event = await Event.findOne({
-            where : {
-                id : EventID
-            },
-            relations : ["tickets"]
+            where: { id: EventID },
+            relations: ["tickets"]
         });
+
         if (!event) {
-            res.status(404).json({ 
-                message: "Event not found~!" 
+            res.status(404).json({
+                message: "Event not found~!"
             });
             return;
         }
 
-        res.status(200).json({ 
-            message: "Event retrieved successfully~!", 
-            event 
+        res.status(200).json({
+            message: "Event retrieved successfully~!",
+            event
         });
     } catch (error) {
-        res.status(500).json({ 
-            message: "Internal server error~!" 
+        res.status(500).json({
+            message: "Internal server error~!"
         });
         next(error);
     }

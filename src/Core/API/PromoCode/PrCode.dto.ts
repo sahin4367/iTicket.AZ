@@ -9,8 +9,10 @@ export class CreatePromoCodeDTO {
     @Max(100)
     discountPercentage: number;
 
+    @IsOptional()
     @IsDateString()
-    expiresAt: string;
+    expiresAt?: string;
+
 
     @IsOptional()
     @IsNumber()

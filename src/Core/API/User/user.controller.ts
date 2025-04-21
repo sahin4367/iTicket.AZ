@@ -7,6 +7,9 @@ import jwt from "jsonwebtoken";
 import { RegisterDTO } from "./user.dto";
 import { validate } from "class-validator";
 import { formatErrors } from "../../Middlewares/errors.middleware";
+import moment from "moment";
+import { appConfig } from "../../../consts";
+import { transporter } from "../../../helpers";
 
 
 const register = async(req:CustomRequest,res:Response,next:NextFunction): Promise<void> => {
@@ -124,7 +127,109 @@ const login = async(req:CustomRequest,res:Response,next:NextFunction): Promise<v
         });
     }
 }
+
+const verifyEmail = async(req:CustomRequest,res:Response,next:NextFunction):Promise<void> => {
+    try {
+        if(!req.user) {
+            res.status(401).json({message : "Unauthorized"});
+            return;
+        }
+
+        const user = req.user;
+        if (user.isVerifiedEmail) {
+            res.status(400).json({
+                message : `Email already verified~!`
+            });
+            return;
+        }
+
+        //create random code : 
+        const randomCode = Math.floor(100000 + Math.random() * 999999);
+        const codeExpireAt = moment().add(appConfig.verifyCodeExpiteMinute , "minutes").toDate();
+        user.codeExpireAt = codeExpireAt;
+        user.verifyCode = randomCode;
+        await user.save();
+
+        const mailOptions = {
+            from : appConfig.USER_EMAIL,
+            to : req.user.email.toString(),
+            subject : "Email verificartion!",
+            text : `Your verification code - ${randomCode}`,
+        }
+        transporter.sendMail(mailOptions , (error,info) => {
+            if (error) {
+                res.status(500).json({message : error.message , error})
+            } else {
+                return res.json({
+                    message : `Verification code sent to your email. 
+                    It will expire in ${appConfig.verifyCodeExpiteMinute} minutes.`
+                });
+            }
+        })
+    } catch (error) {
+        res.status(500).json({
+            message : "Something went wrong",
+        });
+        next(error);
+    }
+}
+
+const checkVerifyCode = async(req:CustomRequest,res:Response,next:NextFunction):Promise<void> => {
+    try {
+        if(!req.user) {
+            res.status(401).json({message : "Unauthorized"});
+            return;
+        }
+        const user = req.user;
+        const {code} = req.body;
+
+        if(!code){
+            res.status(400).json({
+                message : `Verification code is required~!`
+            });
+            return;
+        }
+
+        if (user.isVerifiedEmail) {
+            res.status(400).json({
+                message : `Email already verified~!`
+            });
+            return;
+        }
+
+        if (user.codeExpireAt === null || user.codeExpireAt < new Date()) {
+            res.status(400).json({
+                message : `Verification code expired or is invalid~!`
+            });
+            return;
+        }
+
+        if (user.verifyCode === code && user.codeExpireAt > new Date()) {
+            user.isVerifiedEmail = true;
+            user.verifyCode = null;
+            user.codeExpireAt = null;
+
+            await user.save();
+            res.json({
+                message : `Email verified successfully~!`
+            })
+        }   else {
+            res.status(400).json({
+                message: "Invalid or expired verification code.",
+            });
+        }
+
+    } catch (error) {
+        res.status(500).json({
+            message : `An occured error~!`
+        });
+        next(error);
+    }
+}
+
 export const UserController = {
     register,
-    login
+    login,
+    verifyEmail,
+    checkVerifyCode
 }

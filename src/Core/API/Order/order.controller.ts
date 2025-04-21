@@ -4,6 +4,7 @@ import { EOrderStatus } from "../../app/enums";
 import { Order } from "../../../DAL/models/order.model";
 import { Cart } from "../../../DAL/models/cart.model";
 
+
 const createOrder = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
         const { userId } = req.body;
@@ -19,14 +20,19 @@ const createOrder = async (req: Request, res: Response, next: NextFunction): Pro
         }
 
         const now = new Date();
-        const validCartTickets = cart.cartTickets.filter(cartTicket => cartTicket.reservationExpiresAt > now);
+        const validCartTickets = cart.cartTickets.filter(cartTicket => 
+            new Date(cartTicket.reservationExpiresAt).getTime() > now.getTime()
+        );
 
         if (validCartTickets.length === 0) {
             res.status(400).json({ message: "All reservations have expired!" });
             return;
         }
 
-        const totalPrice = validCartTickets.reduce((sum, cartTicket) => sum + (cartTicket.ticket.price * cartTicket.quantity), 0);
+        const totalPrice = validCartTickets.reduce(
+            (sum, cartTicket) => sum + (cartTicket.ticket.price * cartTicket.quantity),
+            0
+        );
 
         const newOrder = Order.create({
             user: { id: userId },

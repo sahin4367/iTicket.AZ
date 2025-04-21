@@ -47,7 +47,7 @@ console.log(decoded);
 //// SEN DEMELI CART LOGICINDE DEMELI RESERVATIONS - QAYTARILAN RESPONSELERI DUZELT CUNKI , frontend basa dusmur~!
 
 
-Upload etmelisen unutma ,
+Upload etmelisen unutma , - + 
 CRonjob etmeyi unutma
 ve diger isler 
 Socket 

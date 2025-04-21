@@ -44,3 +44,9 @@ export interface CreatePromoCodeDTO {
     expiresAt: string;
     userLimit?: number;
 }
+
+export interface ChatMessage {
+    username: string;
+    message: string;
+    imageUrl: string | null;
+}
