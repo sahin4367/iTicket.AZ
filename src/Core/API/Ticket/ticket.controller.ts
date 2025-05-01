@@ -9,33 +9,33 @@ import { Event } from "../../../DAL/models/event.model";
 
 const createTicket = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-        const { name, price, type, status, user_id, event_id } = req.body;
+        const { price, type, status, event_id } = req.body;
 
-        if (!name || !price || !type || !status || !user_id || !event_id) {
+        if (!price || !type || !status || !event_id) {
             res.status(400).json({
                 message: "Please, all fields are required!",
             });
             return;
         }
 
-        const user = await User.findOne({ 
-            where: { id: user_id },
-            select : {
-                id : true,
-                name : true,
-                surname : true,
-                phone : true,
-                role : true,
-                email : true,
-                createdAt  :true,
-                updatedAt : true,
-                deletedAt : true
-            }
-        });
-        if (!user) {
-            res.status(404).json({ message: "User not found~!" });
-            return;
-        }
+        // const user = await User.findOne({ 
+        //     where: { id: user_id },
+        //     select : {
+        //         id : true,
+        //         name : true,
+        //         surname : true,
+        //         phone : true,
+        //         role : true,
+        //         email : true,
+        //         createdAt  :true,
+        //         updatedAt : true,
+        //         deletedAt : true
+        //     }
+        // });
+        // if (!user) {
+        //     res.status(404).json({ message: "User not found~!" });
+        //     return;
+        // }
 
         const event = await Event.findOne({ 
             where: { id: event_id } 
@@ -47,11 +47,10 @@ const createTicket = async (req: Request, res: Response, next: NextFunction): Pr
         }
 
         const dto = new TicketDTO();
-        dto.name = name;
         dto.price = price;
         dto.type = type;
         dto.status = status;
-        dto.user_id = user_id;
+        // dto.user_id = user_id;
         dto.event_id = event_id;
 
         const errors = await validate(dto);
@@ -61,11 +60,10 @@ const createTicket = async (req: Request, res: Response, next: NextFunction): Pr
         }
 
         const newTicket = Ticket.create({
-            name,
             price,
             type,
             status,
-            user,
+            // user,
             event,
             qrCode: uuidv4(),
         });
@@ -88,15 +86,15 @@ const createTicket = async (req: Request, res: Response, next: NextFunction): Pr
 const getListTicket = async(req:Request,res:Response,next:NextFunction):Promise<void> => {
     try {
         const tickets = await Ticket.find({
-            relations : ["user","event","order"],
+            relations : ["event"],
             select : {
-                user : {
-                    id:true,
-                    email : true,
-                    createdAt : true,
-                    updatedAt : true,
-                    deletedAt : true
-                },
+                // user : {
+                //     id:true,
+                //     email : true,
+                //     createdAt : true,
+                //     updatedAt : true,
+                //     deletedAt : true
+                // },
                 event : {
                     id : true,
                     availableTickets : true,
@@ -132,16 +130,16 @@ const getTicketByID = async(req:Request,res:Response,next:NextFunction):Promise<
         const ticketID = Number(req.params.id);
         const ticket = await Ticket.findOne({
             where : {id : ticketID},
-            relations : ["user","event","order"],
+            relations : ["event"],
             select : {
-                user : {
-                    id : true,
-                    email : true,
-                    role : true,
-                    createdAt : true,
-                    updatedAt : true,
-                    deletedAt : true
-                },
+                // user : {
+                //     id : true,
+                //     email : true,
+                //     role : true,
+                //     createdAt : true,
+                //     updatedAt : true,
+                //     deletedAt : true
+                // },
                 event : {
                     id : true,
                     availableTickets : true,
@@ -194,11 +192,10 @@ const updateTicket = async(req:Request,res:Response,next:NextFunction):Promise<v
         res.status(200).json({
             message : `Ticket updated saccessfully~!`,
             ticket : {
-                name : UpdatedTicket.name,
                 price : UpdatedTicket.price,
                 type  :UpdatedTicket.type,
                 status : UpdatedTicket.status,
-                user_id : UpdatedTicket.user,
+                // user_id : UpdatedTicket.user,
                 event_id : UpdatedTicket.event
             }
         })

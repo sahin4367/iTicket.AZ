@@ -1,9 +1,11 @@
 import { BaseEntity, Column, CreateDateColumn, DeleteDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { EOrderStatus } from "../../Core/app/enums";
 import { User } from "./user.model";
-import { Ticket } from "./ticket.model";
 import { Cart } from "./cart.model";
 import { PromoCode } from "./promocode.model";
+import { Payment } from "./payment.model";
+import { Ticket } from "./ticket.model";
+
 @Entity({  name : "orders" })
 export class Order extends BaseEntity {
     @PrimaryGeneratedColumn()
@@ -12,9 +14,12 @@ export class Order extends BaseEntity {
     @Column({type : "int"})
     quantity : number;
 
-    @Column({ type : "decimal" })
-    totalPrice : number;
-
+    @Column("decimal", { precision: 10, scale: 2, transformer: { 
+        to: (value: number) => value, 
+        from: (value: string) => parseFloat(value) 
+    }})
+    totalPrice: number;
+    
     @Column({ type : "enum" , enum : EOrderStatus , default : EOrderStatus.PENDING })
     status : EOrderStatus;
 
@@ -40,6 +45,9 @@ export class Order extends BaseEntity {
     @OneToOne(() => Cart, cart => cart.order)
     @JoinColumn({ name: "cart_id" })
     cart: Cart;
+
+    @OneToMany(() => Payment , payment => payment.order)
+    payment : Payment[];
 
     @ManyToOne(() => PromoCode, { nullable: true })
     @JoinColumn({ name: "promocode_id" })

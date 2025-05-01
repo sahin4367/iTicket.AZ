@@ -18,6 +18,7 @@
     "@paypal/sdk-client": "^4.0.197",
     "class-validator": "^0.14.1",
     "mysql": "^2.18.1",
+    "paypal-rest-sdk": "^1.8.1",
     "reflect-metadata": "^0.2.2",
     "sequelize": "^6.37.6",
     "socket.io": "^4.8.1",
@@ -29,6 +30,7 @@
     "@types/express": "^5.0.1",
     "@types/jsonwebtoken": "^9.0.9",
     "@types/node": "^22.13.13",
-    "@types/nodemailer": "^6.4.17"
+    "@types/nodemailer": "^6.4.17",
+    "@types/paypal-rest-sdk": "^1.7.9"
   }
 }

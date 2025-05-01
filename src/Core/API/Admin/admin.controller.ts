@@ -1,10 +1,10 @@
 import bcrypt from "bcrypt";
-import { NextFunction, Request, Response } from "express";
+import { NextFunction, Response } from "express";
 import { validate } from "class-validator";
-import { CreateUserByAdminDTO, EditUserByAdminDTO } from "./admin.dto";
-import {EUsesrRole, UpdateUserDTO} from "../../app/enums";
+import { CreateUserByAdminDTO } from "./admin.dto";
 import { User } from "../../../DAL/models/user.model";
 import { CustomRequest } from "../../../type/custome-request";
+import { EUserRole, UpdateUserDTO } from "../../app/enums";
 
     
 const userCreateAdmin = async (req: CustomRequest, res: Response, next: NextFunction):Promise<void> => {
@@ -18,8 +18,8 @@ const userCreateAdmin = async (req: CustomRequest, res: Response, next: NextFunc
             return;
         }
 
-        if (role && !(role in EUsesrRole)) {
-            throw new Error(`Invalid role! Allowed roles: ${Object.keys(EUsesrRole).join(", ")}`);
+        if (role && !(role in EUserRole)) {
+            throw new Error(`Invalid role! Allowed roles: ${Object.keys(EUserRole).join(", ")}`);
         }
     
         const existingUser = await User.findOne({ where: { email: email } });
@@ -164,7 +164,7 @@ const userDelete = async (req: CustomRequest, res: Response, next: NextFunction)
             return ;
         }
         const deletedUser = await User.update(userID,{
-            isdeleted : true,
+            isDeleted : true,
             deletedAt : new Date()
         });
         res.json({

@@ -1,5 +1,6 @@
 import { IsEmail, IsEnum , IsOptional, IsPhoneNumber, IsString, Matches, MaxLength, MinLength } from "class-validator";
-import { EUsesrRole } from "../../app/enums";
+import { EUserRole } from "../../app/enums";
+
 
 export class RegisterDTO {
     @IsString()
@@ -27,11 +28,9 @@ export class RegisterDTO {
 
     @IsOptional()
     @IsString()
-    // @MinLength(6)
-    // @MaxLength(15)
     password: string;
 
-    @IsEnum(EUsesrRole)
-    role: EUsesrRole;
+    @IsEnum(EUserRole)
+    role: EUserRole;
 
 }

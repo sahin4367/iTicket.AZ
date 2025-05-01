@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>PayPal Test</title>
+</head>
+<body>
+  <h1>iTicket.az PayPal Test</h1>
+  <button id="pay">Pay with PayPal</button>
+
+  <script>
+    document.getElementById("pay").addEventListener("click", async () => {
+      const res = await fetch("http://localhost:3000/api/v1/payments/create");
+      const data = await res.json();
+      if (data.approvalUrl) {
+        window.location.href = data.approvalUrl;
+      } else {
+        alert("Failed to get PayPal link");
+      }
+    });
+  </script>
+</body>
+</html>

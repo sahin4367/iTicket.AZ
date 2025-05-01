@@ -1,6 +1,6 @@
 import { Response, NextFunction } from 'express';
 import { CustomRequest } from "../../type/custome-request";
-import { EUsesrRole } from '../app/enums';
+import { EUserRole } from '../app/enums';
 
 export const adminAuth = async (req: CustomRequest, res: Response, next: NextFunction): Promise<void> => {
     if (!req.user) {
@@ -10,7 +10,7 @@ export const adminAuth = async (req: CustomRequest, res: Response, next: NextFun
         return;
     }
 
-    if (req.user.role !== EUsesrRole.ADMIN) {
+    if (req.user.role !== EUserRole.ADMIN) {
         res.status(403).json({
             message: `You don't have permission~!`
         });

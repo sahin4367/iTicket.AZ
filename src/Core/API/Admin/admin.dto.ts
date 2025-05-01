@@ -1,5 +1,5 @@
 import {IsBoolean,IsDefined,IsEmail,IsEnum,IsOptional,IsPhoneNumber,IsString,Matches,MaxLength,MinLength} from "class-validator";
-import { EUsesrRole } from "../../app/enums";
+import { EUserRole } from "../../app/enums";
 
 export class CreateUserByAdminDTO {
     @IsString()
@@ -30,8 +30,8 @@ export class CreateUserByAdminDTO {
         @MaxLength(10)
         password: string;
     
-        @IsEnum(EUsesrRole)
-        role: EUsesrRole;
+        @IsEnum(EUserRole)
+        role: EUserRole;
 
 }
 

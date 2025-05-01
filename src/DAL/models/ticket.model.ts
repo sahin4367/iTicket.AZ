@@ -10,9 +10,6 @@ export class Ticket extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column({ type: "varchar", length: 255 })
-    name: string;
-
     @Column({ type: "decimal", precision: 10, scale: 2 })
     price: number;
 
@@ -22,16 +19,16 @@ export class Ticket extends BaseEntity {
     @Column({ type : "enum", enum: ETicketStatus, default : ETicketStatus.ACTIVE })
     status: ETicketStatus;
 
-    @ManyToOne(() => User, (user) => user.tickets, { onDelete: "CASCADE" })
-    @JoinColumn({ name: "user_id" })
-    user: User;
+    // @ManyToOne(() => User, (user) => user.tickets, { onDelete: "CASCADE" })
+    // @JoinColumn({ name: "user_id" })
+    // user: User;
 
     @ManyToOne(() => Event, (event) => event.tickets, { onDelete: "CASCADE" })
     @JoinColumn({ name: "event_id" })
     event: Event;
 
-    @ManyToOne(() => Order , order => order.ticket)
-    @JoinColumn({ name : "order_id" })
+    @ManyToOne(() => Order , order => order.ticket, {onDelete : "CASCADE"})
+    @JoinColumn({name : "order_id"})
     order : Order;
 
     @Column({ type: 'text', nullable: true })

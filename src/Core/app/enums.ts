@@ -1,5 +1,5 @@
 
-export enum EUsesrRole {
+export enum EUserRole {
     USER = "USER",
     ADMIN = "ADMIN"
 }
@@ -29,13 +29,20 @@ export enum EOrderStatus {
     CANCLELED = "CANCLELED"
 }
 
+
+export enum EPaymentStatus {
+    PENDING = "PENDING",
+    SUCCESS = "SUCCESS",
+    FAILED = "FAILED"
+}
+
 export interface UpdateUserDTO {
     name  : string;
     surname : string;
     email : string;
     password : string;
     phone : string;
-    role : EUsesrRole;
+    role : EUserRole;
 }
 
 export interface CreatePromoCodeDTO {

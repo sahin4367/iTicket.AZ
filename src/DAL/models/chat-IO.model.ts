@@ -1,23 +1,23 @@
 import { BaseEntity, Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { User } from "./user.model";
 
-@Entity({name : "messages"})
+@Entity({ name: "messages" })
 export class Message extends BaseEntity {
     @PrimaryGeneratedColumn()
-    id : number;
+    id: number;
 
     @Column()
-    content : string;
+    content: string;
 
-    @Column({nullable : true})
-    imageUrl : string;
+    @Column({ nullable: true })
+    imageUrl: string;
 
     @CreateDateColumn()
-    timestamp : Date;
+    timestamp: Date;
 
-    @ManyToOne(() => User , user => user.messageSend)
-    sender : User;
+    @ManyToOne(() => User, user => user.messageSend, { onDelete: "CASCADE" })
+    sender: User;
 
-    @ManyToOne(() => User , user => user.messageReceiver)
-    receiver : User;
+    @ManyToOne(() => User, user => user.messageReceiver, { onDelete: "CASCADE" })
+    receiver: User;
 }

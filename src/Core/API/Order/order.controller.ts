@@ -63,7 +63,7 @@ const createOrder = async (req: Request, res: Response, next: NextFunction): Pro
 const getListOrder = async(req:Request,res:Response,next:NextFunction):Promise<void> => {
     try {
         const orders = await Order.find({
-            relations : ["user"] , //payment
+            relations : ["user","promoCode"] , //payment
             select : {
                 user : {
                     id : true,
@@ -158,7 +158,7 @@ const updateOrder = async(req:Request,res:Response,next:NextFunction):Promise<vo
             message : `Order updated successfuly~!`,
             order : {
                 user_id : UpdatedOrder.user,
-                ticket_id : UpdatedOrder.ticket,
+                // ticket_id : UpdatedOrder.ticket,
                 quantity : UpdatedOrder.quantity
             } // burda SEN RESPONSE DUZELTMELISEN PIS RESPONSE ALIRSAN~!!
         });

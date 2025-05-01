@@ -1,10 +1,10 @@
 import { BaseEntity, Column, CreateDateColumn, DeleteDateColumn, Entity, OneToMany, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
-import { EUsesrRole } from "../../Core/app/enums";
-import { Model, DataTypes } from "sequelize";
 import { Ticket } from "./ticket.model";
 import { Order } from "./order.model";
 import { Cart } from "./cart.model";
 import { Message } from "./chat-IO.model";
+import { Payment } from "./payment.model";
+import { EUserRole } from "../../Core/app/enums";
 
 @Entity({name : "users"})
 export class User extends BaseEntity {
@@ -26,8 +26,8 @@ export class User extends BaseEntity {
     @Column({type : "varchar" , length : 150})
     password : string;
 
-    @Column({type : "enum" , enum : EUsesrRole , default : EUsesrRole.ADMIN})
-    role: EUsesrRole;
+    @Column({type : "enum" , enum : EUserRole , default : EUserRole.ADMIN})
+    role: EUserRole;
 
     @CreateDateColumn({type : "datetime" , nullable : true})
     createdAt: Date;
@@ -48,10 +48,11 @@ export class User extends BaseEntity {
     deletedAt: Date;
 
     @Column({default : false})
-    isdeleted : boolean;
+    isDeleted : boolean; 
 
-    @OneToMany(() => Ticket, (ticket) => ticket.user)
-    tickets : Ticket[];
+
+    // @OneToMany(() => Ticket, (ticket) => ticket.user)
+    // tickets : Ticket[];
 
     @OneToMany(() => Order , order => order.user)
     order : Order[];
@@ -60,8 +61,11 @@ export class User extends BaseEntity {
     cart : Cart;
 
     @OneToMany(() => Message , message => message.sender)
-    messageSend : Message[];
+    messageSend : Message[]; //Chat-SocketIO
 
     @OneToMany(() => Message , message => message.receiver)
     messageReceiver : Message[];
+
+    @OneToMany(() => Payment , payment => payment.user)
+    payment : Payment[];
 }

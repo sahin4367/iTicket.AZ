@@ -55,4 +55,13 @@ Promocode logic
 daha sonra dostuna bilet gondermek qalib 
 ve s.... diger melumatlar ~!~ 
 
-
+  WERSELL NEDIR 
+  SENDDERE-admin 
+--------------------------------------------------------------------------------------
+Demeli bir QR mentiqi:~!
+Payment sistemi sadece olaraq Facke yazmaq ~!
+Responseleri dogru qaytarmaq ~!
+Modelleri elemek ve eyni zamanda da controlleri ise salmaq tekrar tekrar yoxlamaq hell etmek~!
+CRonjob Mentigini yazmaq ve Tetbiq etmek yeni~!
+Daha sonra ise ne bilim???
+Ve sadece olaraq bir slide hazirlamaq~! 

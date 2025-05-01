@@ -1,6 +1,5 @@
 import { Response,NextFunction } from "express";
 import { CustomRequest } from "../../../type/custome-request";
-import { EUsesrRole } from "../../app/enums";
 import { User } from "../../../DAL/models/user.model";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
@@ -10,6 +9,7 @@ import { formatErrors } from "../../Middlewares/errors.middleware";
 import moment from "moment";
 import { appConfig } from "../../../consts";
 import { transporter } from "../../../helpers";
+import { EUserRole } from "../../app/enums";
 
 
 const register = async(req:CustomRequest,res:Response,next:NextFunction): Promise<void> => {
@@ -20,7 +20,7 @@ const register = async(req:CustomRequest,res:Response,next:NextFunction): Promis
             return;
         }
 
-        if (role === EUsesrRole.ADMIN) {
+        if (role === EUserRole.ADMIN) {
             res.json("Error~!");
             return;
         }
