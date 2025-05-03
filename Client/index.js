@@ -5,38 +5,24 @@ const container = document.getElementById("container");
 const messageInput = document.getElementById("message");
 const sendBtn = document.getElementById("sendBtn");
 const messageList = document.getElementById("messageList");
-const fileInput = document.getElementById("fileInput");
 const audio = new Audio("Client_effect.mp3");
 
-// Token ilə socket bağlantı
-const socket = io("http://localhost:4000", {
-  auth: {
-    token: localStorage.getItem("token"), // login zamanı saxlanılıb
-  }
-});
+const socket = io("http://localhost:4000");
 
 socket.on("connect", () => {
   console.log("Connected to server");
 });
 
-socket.on("receive-message", ({ senderId, receiverId, content, imageUrl }) => {
-  const li = document.createElement("li");
-  li.textContent = `[User ${senderId}]: ${content}`;
+socket.on("receive-message", ({ username, message }) => {
+  document.getElementById("typing").textContent = "";
 
-  if (imageUrl) {
-    const img = document.createElement("img");
-    img.src = imageUrl;
-    img.alt = "Image";
-    img.style.maxWidth = "200px";
-    img.style.borderRadius = "8px";
-    li.appendChild(img);
-  }
+  console.log(`[${username}]: ${message}`);
 
-  if (senderId.toString() !== localStorage.getItem("userId")) {
-    audio.play();
-  }
+  if (username !== usernameInput.value) audio.play();
 
-  messageList.appendChild(li);
+  messageList.appendChild(
+    document.createElement("li")
+  ).textContent = `[${username}]: ${message}`;
 });
 
 joinBtn.addEventListener("click", () => {
@@ -46,29 +32,31 @@ joinBtn.addEventListener("click", () => {
   }
 });
 
-sendBtn.addEventListener("click", async () => {
-  const message = messageInput.value;
-  const file = fileInput.files[0];
-  const receiverId = "1"; // admin id 
-
-  if (!message && !file) return;
-
-  const payload = {
-    message,
-    receiverId,
-  };
-
-  if (file) {
-    const reader = new FileReader();
-    reader.onload = function () {
-      payload.image = reader.result;
-      socket.emit("chat", payload);
-    };
-    reader.readAsDataURL(file);
-  } else {
-    socket.emit("chat", payload);
-  }
-
+sendBtn.addEventListener("click", () => {
+  socket.emit("chat", {
+    username: usernameInput.value,
+    message: messageInput.value,
+  });
   messageInput.value = "";
-  fileInput.value = "";
 });
+
+messageInput.addEventListener("keypress", (e) => {
+  socket.emit("type", usernameInput.value);
+});
+
+messageInput.addEventListener("keyup", (e) => {
+  if (e.key === "Enter") {
+    socket.emit("chat", {
+      username: usernameInput.value,
+      message: messageInput.value,
+    });
+    messageInput.value = "";
+  }
+});
+
+socket.on("typing-user", (username) => {
+  document.getElementById("typing").textContent = `${username} is typing...`;
+
+  console.log(`${username} is typing...`);
+});
+

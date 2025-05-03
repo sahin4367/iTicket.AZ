@@ -3,7 +3,6 @@ import { TicketDTO } from "./ticket.dto";
 import { validate } from "class-validator";
 import { Ticket } from "../../../DAL/models/ticket.model";
 import { v4 as uuidv4 } from "uuid"
-import { User } from "../../../DAL/models/user.model";
 import { Event } from "../../../DAL/models/event.model";
 
 
@@ -13,7 +12,7 @@ const createTicket = async (req: Request, res: Response, next: NextFunction): Pr
 
         if (!price || !type || !status || !event_id) {
             res.status(400).json({
-                message: "Please, all fields are required!",
+                message: "Please, all fields are required~!",
             });
             return;
         }
@@ -107,7 +106,7 @@ const getListTicket = async(req:Request,res:Response,next:NextFunction):Promise<
         });
         if (tickets.length === 0) {
             res.status(404).json({
-                message: "No tickets found!",
+                message: "No tickets found~!",
             });
             return;
         }

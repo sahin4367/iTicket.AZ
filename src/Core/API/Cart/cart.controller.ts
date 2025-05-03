@@ -2,7 +2,6 @@ import { Request,Response,NextFunction } from "express";
 import { Cart } from "../../../DAL/models/cart.model";
 import { Ticket } from "../../../DAL/models/ticket.model";
 import { CartTicket } from "../../../DAL/models/Cart-Ticket.model";
-import { User } from "../../../DAL/models/user.model";
 
 
 const addToCart = async (req: Request, res: Response, next: NextFunction): Promise<void> => {

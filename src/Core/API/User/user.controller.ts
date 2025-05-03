@@ -95,8 +95,8 @@ const login = async(req:CustomRequest,res:Response,next:NextFunction): Promise<v
             where : {email : email}
         });
         if (!user) {
-            res.status(401).json({ message: "Email ve ya shifre sehvdir!" });
-            console.log("user yoxdur");
+            res.status(401).json({ message: "Email or password incorrect~!" });
+            console.log("User not found~!");
             return;
         }
 
@@ -104,9 +104,9 @@ const login = async(req:CustomRequest,res:Response,next:NextFunction): Promise<v
         const isValidPassword = await bcrypt.compare(password,user.password);
         if (!isValidPassword) {
             res.status(401).json({
-                message: "Email ve ya shifre sehvdir!",
+                message: "Email or password incorrect~!",
             });
-            console.log("parol yalnisdir");
+            console.log("Password incorrect~!");
             return;
             }
         const token = jwt.sign(
