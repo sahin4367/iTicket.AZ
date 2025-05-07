@@ -5,6 +5,6 @@ export const PaymentRouter = Router();
 const controller = PaymentController;
 
 // PaymentRouter.post('/create' , controller.createPayment);
-PaymentRouter.post('/create' , controller.fakePaymentSuccess);
-PaymentRouter.post('/success' , controller.executePayment);
+// PaymentRouter.post('/create' , controller.fakeCreatePayment);
+// PaymentRouter.get('/success' , controller.fakeApprovalPage);
 PaymentRouter.post('/cancel' , controller.cancelPayment);

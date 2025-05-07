@@ -101,7 +101,7 @@ const getOrderById = async(req:Request,res:Response,next:NextFunction):Promise<v
         
         const order = await Order.findOne({
             where : {id : orderID},
-            relations : ["user"],
+            relations : ["user","promoCode"],
             select : {
                 user  : {
                     id :true,

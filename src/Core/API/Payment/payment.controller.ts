@@ -58,64 +58,6 @@ import { EPaymentStatus } from "../../app/enums";
 // }
 // };
 
-const fakePaymentSuccess = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    try {
-        const { orderId } = req.body;
-
-        const order = await Order.findOne({ where: { id: orderId }, relations: ["user"] });
-        if (!order) {
-            res.status(404).json({ message: "Sifariş tapılmadı!" });
-            return;
-        }
-
-        const fakePayment = Payment.create({
-            user: order.user,
-            order: order,
-            status: EPaymentStatus.SUCCESS, // Burada statusu 'COMPLETED' kimi saxta şəkildə qeyd edirik
-            paymentId: `FAKE_${orderId}`
-        });
-
-        await fakePayment.save();
-
-        res.status(200).json({ message: "Ödəniş saxta şəkildə uğurla qeyd olundu!" });
-    } catch (err) {
-        next(err);
-    }
-};
-
-const executePayment = async (req: Request, res: Response): Promise<void> => {
-    const { PayerID, paymentId } = req.query;
-
-
-    if (typeof PayerID !== "string" || typeof paymentId !== "string") {
-        res.status(400).json({ message: "Invalid payment data!" });
-        return;
-    }
-
-    const executeData = {
-        payer_id: PayerID,
-    };
-
-    paypal.payment.execute(paymentId, executeData, async (error, payment) => {
-        if (error) {
-            console.error(error);
-            res.redirect("/fail-page");
-            return;
-        }
-
-        const paymentRecord = await Payment.findOne({
-            where: { paymentId: payment.id },
-            relations: ["order"]
-        });
-
-        if (paymentRecord) {
-            paymentRecord.status = EPaymentStatus.SUCCESS;
-            await paymentRecord.save();
-        }
-
-        res.redirect("/success-page");
-    });
-};
 
 
 const cancelPayment = async (req: Request, res: Response): Promise<void> => {
@@ -127,7 +69,5 @@ const cancelPayment = async (req: Request, res: Response): Promise<void> => {
 
 export const PaymentController = {
     // createPayment,
-    fakePaymentSuccess,
-    executePayment,
     cancelPayment,
 }

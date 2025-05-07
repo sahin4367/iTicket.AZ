@@ -1,20 +1,59 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  text-align: center;
+}
+
 #container {
   display: none;
   width: 500px;
-  margin: 0 auto;
+  margin: 20px auto;
   border: 1px solid #000;
+  border-radius: 8px;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+  background: white;
+  padding: 15px;
 }
 
 #container .messages {
   height: 400px;
+  padding: 10px;
+  background-color: #f9f9f9;
+  overflow-y: auto;
+  border-radius: 8px;
 }
 
 #container .inputs {
   display: grid;
   grid-template-columns: 3fr 1fr;
+  gap: 10px;
 }
 
 #typing {
   font-size: 12px;
+  color: #555;
+  font-style: italic;
+  animation: fadeInOut 1.5s infinite alternate;
 }
 
+@keyframes fadeInOut {
+  from { opacity: 0.3; }
+  to { opacity: 1; }
+}
+
+button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#joinBtn {
+  background: #007BFF;
+  color: white;
+}
+
+#sendBtn {
+  background: #28A745;
+  color: white;
+}

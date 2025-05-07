@@ -47,7 +47,7 @@ AppDataSource.initialize()
         console.log("Database connected successfully~!");
 
         server.listen(appConfig.PORT, () => {
-            console.log(`Server is running on port - ${appConfig.PORT}`);
+            console.log(`Server is running on port - ${appConfig.PORT}.`);
 
             startTicketCleanupJob();
             console.log("Ticket cleanup cron job started~!");

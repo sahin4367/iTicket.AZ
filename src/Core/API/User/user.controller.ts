@@ -10,6 +10,7 @@ import moment from "moment";
 import { appConfig } from "../../../consts";
 import { transporter } from "../../../helpers";
 import { EUserRole } from "../../app/enums";
+import { number } from "joi";
 
 
 const register = async(req:CustomRequest,res:Response,next:NextFunction): Promise<void> => {
@@ -207,7 +208,7 @@ const checkVerifyCode = async(req:CustomRequest,res:Response,next:NextFunction):
         if (user.verifyCode === code && user.codeExpireAt > new Date()) {
             user.isVerifiedEmail = true;
             user.verifyCode = null;
-            user.codeExpireAt = null;
+            user.codeExpireAt = null
 
             await user.save();
             res.json({

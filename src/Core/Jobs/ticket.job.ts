@@ -13,9 +13,9 @@ export const startTicketCleanupJob = () => {
         await CartTicket.delete({
         reservationExpiresAt: LessThan(new Date()),
         });
-        console.log(`Deleted ${expiredTickets.length} expired tickets`);
+        console.log(`Deleted ${expiredTickets.length} expired tickets~!`);
     } else {
-        console.log("No expired tickets found");
+        console.log("No expired tickets found~!");
     }
     } catch (error) {
     console.error("Error deleting expired tickets:", error);

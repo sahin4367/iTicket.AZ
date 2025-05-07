@@ -59,9 +59,12 @@ ve s.... diger melumatlar ~!~
   SENDDERE-admin 
 --------------------------------------------------------------------------------------
 Demeli bir QR mentiqi:~!
-Payment sistemi sadece olaraq Facke yazmaq ~!
-Responseleri dogru qaytarmaq ~!
-Modelleri elemek ve eyni zamanda da controlleri ise salmaq tekrar tekrar yoxlamaq hell etmek~!
-CRonjob Mentigini yazmaq ve Tetbiq etmek yeni~! + 
-Daha sonra ise ne bilim???
-Ve sadece olaraq bir slide hazirlamaq~! 
+----------------------------------------------------------------------------------
+Bele cixir ki Cart ucun update etmelisen demeli update delete{Soft,Hard}~!
+Butun controllerlerde demeli delete yazmaq-Hard
+Paymenti hell etmek Bir endpoint yazaraq fixs etmek~!
+Socket de de bir nece problem var onlari hell etmek~!
+Qaytarilan responseler de Frontendi basa dusmek ,
+responselere - 200,201,400,500 ve s bunlari da duzelt ver!
+
+ORDER NECE UPDATE EDE BILER KI YENI ORDA USERI DEYISECEK BU NE DEMEKDIR KI ???
