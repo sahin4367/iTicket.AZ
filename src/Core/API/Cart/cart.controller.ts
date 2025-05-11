@@ -86,8 +86,35 @@ const getCart = async(req:Request,res:Response,next:NextFunction):Promise<void> 
     }
 }
 
+const removeFromCart = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+        const cartTicketId = Number(req.params.id);
+
+        const cartTicket = await CartTicket.findOne({
+            where : {id : cartTicketId}
+        })
+        if (!cartTicket) {
+            res.status(404).json({
+                message : `Cart ticket with id ${cartTicketId} not found!`
+            });
+            return;
+        }
+
+        await CartTicket.delete(cartTicketId);
+        res.status(200).json({
+            message : `Cart ticket with id ${cartTicketId} removed successfully!`
+        })
+    } catch (error) {
+        res.status(500).json({
+            message : `Error removing cart ticket: ${error}`,
+        })
+        next(error);
+    }
+}
+
 
 export const CartController = {
     addToCart,
     getCart,
+    removeFromCart
 }

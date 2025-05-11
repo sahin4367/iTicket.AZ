@@ -9,6 +9,7 @@ import { OrderRouter } from "../Core/API/Order/order.router";
 import { CartRouter } from "../Core/API/Cart/cart.router";
 import { PromoCodeRouter } from "../Core/API/PromoCode/PrCode.router";
 import { PaymentRouter } from "../Core/API/Payment/payment.router";
+import { ChatRouter } from "../Core/API/Chat-IO/chat.router";
 
 export const v1Router = Router();
 
@@ -20,3 +21,5 @@ v1Router.use('/orders' , OrderRouter , useAuth , adminAuth )
 v1Router.use('/carts' , CartRouter , useAuth , adminAuth )
 v1Router.use('/promo-code' , PromoCodeRouter , useAuth , adminAuth)
 v1Router.use('/payments' , PaymentRouter , useAuth , adminAuth )
+v1Router.use('/chats-IO' , ChatRouter )
+

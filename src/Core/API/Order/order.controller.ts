@@ -3,6 +3,8 @@ import { CreateOrderDTO, UpdateOrderDTO } from "./order.dto";
 import { EOrderStatus } from "../../app/enums";
 import { Order } from "../../../DAL/models/order.model";
 import { Cart } from "../../../DAL/models/cart.model";
+import { User } from "../../../DAL/models/user.model";
+import { sendEmail } from "../../../helpers";
 
 
 const createOrder = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -49,6 +51,17 @@ const createOrder = async (req: Request, res: Response, next: NextFunction): Pro
 
         cart.totalPrice = 0;
         await cart.save();
+
+        const user = await User.findOne({
+            where : { id : userId }
+        });
+        if (user) {
+            await sendEmail(
+                user.email,
+                "Order creted successfully~!",
+                `Your order has been created successfully! Order ID: ${newOrder.id}. Total Price: ${totalPrice} AZN. Order Status: ${EOrderStatus.PENDING}.`
+            )
+        }
 
         res.status(201).json({
             message: "Order created successfully!",
@@ -126,50 +139,6 @@ const getOrderById = async(req:Request,res:Response,next:NextFunction):Promise<v
     }
 }
 
-const updateOrder = async(req:Request,res:Response,next:NextFunction):Promise<void> => {
-    try {
-        const orderId = Number(req.params.id);
-        const UpdateData : UpdateOrderDTO = req.body;
-
-        const order = await Order.findOne({
-            where : {id : orderId},
-            select : {
-                user : {
-                    id : true,
-                    email : true,
-                    role : true,
-                    createdAt : true,
-                    updatedAt : true,
-                    deletedAt : true
-                }
-            }
-        });
-        if (!order) {
-            res.status(404).json({
-                message : `Order not found~!`
-            });
-            return;
-        }
-
-        Object.assign(order,UpdateData);
-
-        const UpdatedOrder = await order.save();
-        res.status(200).json({
-            message : `Order updated successfuly~!`,
-            order : {
-                user_id : UpdatedOrder.user,
-                // ticket_id : UpdatedOrder.ticket,
-                quantity : UpdatedOrder.quantity
-            } // burda SEN RESPONSE DUZELTMELISEN PIS RESPONSE ALIRSAN~!!
-        });
-    } catch (error) {
-        res.status(500).json({
-            message : `An occured error~!`
-        });
-        next(error)
-    }
-}
-
 const softDeleteOrder = async(req:Request,res:Response,next:NextFunction):Promise<void> => {
     try {
         const orderID = Number(req.params.id);
@@ -203,6 +172,5 @@ export const OrderController = {
     createOrder,
     getListOrder,
     getOrderById,
-    updateOrder, // UPDATE EDENDE DEMELI quantity ile totalPrice  ARASINDA YARANAN CONFIQLERE BAX~!
     softDeleteOrder,
 }

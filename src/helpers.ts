@@ -11,3 +11,18 @@ export const transporter = nodemailer.createTransport({
         pass: appConfig.PASSWORD,
     },
 });
+
+
+export const sendEmail = async (to: string, subject: string, text: string): Promise<void> => {
+    try {
+        await transporter.sendMail({
+            from: appConfig.USER_EMAIL,
+            to,
+            subject,
+            text,
+        });
+    } catch (error) {
+        console.error("Error sending email:", error);
+        throw error;
+    }
+};

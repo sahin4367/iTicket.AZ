@@ -80,6 +80,6 @@ const applyPromoCode = async (req: Request, res: Response, next: NextFunction): 
 
 
 export const PromocodeController = {
-    applyPromoCode,
-    createPromoCode
+    createPromoCode,
+    applyPromoCode
 };

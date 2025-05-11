@@ -17,25 +17,6 @@ const createTicket = async (req: Request, res: Response, next: NextFunction): Pr
             return;
         }
 
-        // const user = await User.findOne({ 
-        //     where: { id: user_id },
-        //     select : {
-        //         id : true,
-        //         name : true,
-        //         surname : true,
-        //         phone : true,
-        //         role : true,
-        //         email : true,
-        //         createdAt  :true,
-        //         updatedAt : true,
-        //         deletedAt : true
-        //     }
-        // });
-        // if (!user) {
-        //     res.status(404).json({ message: "User not found~!" });
-        //     return;
-        // }
-
         const event = await Event.findOne({ 
             where: { id: event_id } 
         }
@@ -49,7 +30,6 @@ const createTicket = async (req: Request, res: Response, next: NextFunction): Pr
         dto.price = price;
         dto.type = type;
         dto.status = status;
-        // dto.user_id = user_id;
         dto.event_id = event_id;
 
         const errors = await validate(dto);
@@ -62,7 +42,6 @@ const createTicket = async (req: Request, res: Response, next: NextFunction): Pr
             price,
             type,
             status,
-            // user,
             event,
             qrCode: uuidv4(),
         });
@@ -87,13 +66,6 @@ const getListTicket = async(req:Request,res:Response,next:NextFunction):Promise<
         const tickets = await Ticket.find({
             relations : ["event"],
             select : {
-                // user : {
-                //     id:true,
-                //     email : true,
-                //     createdAt : true,
-                //     updatedAt : true,
-                //     deletedAt : true
-                // },
                 event : {
                     id : true,
                     availableTickets : true,
@@ -131,14 +103,6 @@ const getTicketByID = async(req:Request,res:Response,next:NextFunction):Promise<
             where : {id : ticketID},
             relations : ["event"],
             select : {
-                // user : {
-                //     id : true,
-                //     email : true,
-                //     role : true,
-                //     createdAt : true,
-                //     updatedAt : true,
-                //     deletedAt : true
-                // },
                 event : {
                     id : true,
                     availableTickets : true,
@@ -194,7 +158,6 @@ const updateTicket = async(req:Request,res:Response,next:NextFunction):Promise<v
                 price : UpdatedTicket.price,
                 type  :UpdatedTicket.type,
                 status : UpdatedTicket.status,
-                // user_id : UpdatedTicket.user,
                 event_id : UpdatedTicket.event
             }
         })

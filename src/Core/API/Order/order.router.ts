@@ -7,5 +7,4 @@ const controller = OrderController;
 OrderRouter.post('/create' , controller.createOrder)
 OrderRouter.get('/list' , controller.getListOrder)
 OrderRouter.get('/list/:id' , controller.getOrderById)
-OrderRouter.put('/update/:id' , controller.updateOrder)
 OrderRouter.put('/delete/:id' , controller.softDeleteOrder)

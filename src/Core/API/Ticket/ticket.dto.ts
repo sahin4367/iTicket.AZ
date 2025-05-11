@@ -13,9 +13,6 @@ export class TicketDTO {
     @IsEnum(ETicketStatus)
     status : ETicketStatus;
 
-    // @IsNumber()
-    // user_id: number;
-
     @IsNumber()
     event_id: number;
 }

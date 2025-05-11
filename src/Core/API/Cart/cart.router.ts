@@ -6,3 +6,4 @@ const controller = CartController;
 
 CartRouter.post('/add' , controller.addToCart);
 CartRouter.get('/list' , controller.getCart);
+CartRouter.delete('/remove/:id' , controller.removeFromCart);

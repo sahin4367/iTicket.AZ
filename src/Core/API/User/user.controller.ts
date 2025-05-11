@@ -11,6 +11,7 @@ import { appConfig } from "../../../consts";
 import { transporter } from "../../../helpers";
 import { EUserRole } from "../../app/enums";
 import { number } from "joi";
+import { access } from "fs";
 
 
 const register = async(req:CustomRequest,res:Response,next:NextFunction): Promise<void> => {
@@ -117,7 +118,7 @@ const login = async(req:CustomRequest,res:Response,next:NextFunction): Promise<v
         );
         res.status(200).json({
             message: `User login successfully~!`,
-            token,
+            access_token: token,
         });
 
 
