@@ -96,6 +96,7 @@ JWT_SECRET=****
 USER_EMAIL=****@gmail.com
 PASSWORD=****  # email göndərmək üçün
 
+https://drive.google.com/file/d/1p-SQHe5falNSE2rI9ycqPTHReV_5NFLr/view?usp=sharing
 
 ```bash
 git clone https://github.com/sahin4367/iTicket.AZ
