@@ -23,7 +23,7 @@
     "node-cron": "^3.0.3",
     "paypal-rest-sdk": "^1.8.1",
     "reflect-metadata": "^0.2.2",
-    "sequelize": "^6.37.6",
+    "sequelize": "^6.37.8",
     "socket.io": "^4.8.1",
     "typeorm": "^0.3.21"
   },
