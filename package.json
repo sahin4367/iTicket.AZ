@@ -1,0 +1,47 @@
+{
+  "name": "iticket.az",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "npx tsc",
+    "prod": "node build/index.js",
+    "dev": "nodemon src/index.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@paypal/paypal-js": "^8.2.0",
+    "@paypal/paypal-server-sdk": "^1.0.0",
+    "@paypal/sdk-client": "^4.0.197",
+    "axios": "^1.13.1",
+    "class-validator": "^0.14.1",
+    "consul": "^2.0.1",
+    "cron": "^4.3.0",
+    "joi": "^18.1.2",
+    "mysql": "^2.18.1",
+    "node-cron": "^3.0.3",
+    "opossum": "^9.0.0",
+    "paypal-rest-sdk": "^1.8.1",
+    "pg": "^8.20.0",
+    "reflect-metadata": "^0.2.2",
+    "sequelize": "^6.37.8",
+    "socket.io": "^4.8.1",
+    "typeorm": "^0.3.21"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^5.0.2",
+    "@types/consul": "^0.40.3",
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.1",
+    "@types/joi": "^17.2.2",
+    "@types/jsonwebtoken": "^9.0.9",
+    "@types/node": "^22.13.13",
+    "@types/node-cron": "^3.0.11",
+    "@types/nodemailer": "^6.4.17",
+    "@types/opossum": "^8.1.9",
+    "@types/paypal-rest-sdk": "^1.7.9"
+  }
+}
