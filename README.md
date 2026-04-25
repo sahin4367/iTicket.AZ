@@ -139,7 +139,7 @@ GitHub Actions runs type checking and Docker build verification on every push to
 
 ## Demo
 
-[You can check out this article.]([https://drive.google.com/file/d/1p-SQHe5falNSE2rI9ycqPTHReV_5NFLr/view?usp=sharing](https://dev.to/shahin-qlvlrk043/building-a-fault-tolerant-nodejs-backend-4-patterns-i-applied-to-my-ticketing-app-1a99))
+https://dev.to/shahin-qlvlrk043/building-a-fault-tolerant-nodejs-backend-4-patterns-i-applied-to-my-ticketing-app-1a99
 
 ---
 
