@@ -78,10 +78,10 @@ npm run dev
 ## Environment Variables
 
 ```env
-PORT=3000
+PORT=
 DB_HOST=localhost
-DB_PORT=5432
-DB_NAME=iticket
+DB_PORT=
+DB_NAME=your_DB_name
 DB_USERNAME=your_username
 DB_PASSWORD=your_password
 JWT_SECRET=your_secret
@@ -139,7 +139,7 @@ GitHub Actions runs type checking and Docker build verification on every push to
 
 ## Demo
 
-[Watch demo video](https://drive.google.com/file/d/1p-SQHe5falNSE2rI9ycqPTHReV_5NFLr/view?usp=sharing)
+[You can check out this article.]([https://drive.google.com/file/d/1p-SQHe5falNSE2rI9ycqPTHReV_5NFLr/view?usp=sharing](https://dev.to/shahin-qlvlrk043/building-a-fault-tolerant-nodejs-backend-4-patterns-i-applied-to-my-ticketing-app-1a99))
 
 ---
 
